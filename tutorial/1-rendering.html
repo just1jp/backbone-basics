@@ -27,7 +27,7 @@ var renderSomethingOnThePage = function(message) {
    */
   var html = [
     '<div>',
-      '<span>',
+      '<span style="color: blue">',
         message,
       '</span>',
     '</div>',
@@ -101,7 +101,6 @@ var Message = Backbone.Model.extend({
      * Putting it into the initialize function let's us be sure that
      * all models that are created will have event listeners on them.
      */
-    this.on(YOUR CODE HERE);
     /* It is your turn to write the event handler.
      *
      * Make an event listener that will listen for a `change` in this model's
@@ -111,7 +110,11 @@ var Message = Backbone.Model.extend({
      *
      * Try it yourself, then check out how the function was defined on the
      * previous exercise.
-     */
+      */
+    this.on('change', function(e) {
+      console.log('Something in this message model was changed!', e.changed);
+      renderSomethingOnThePage(this.get('message'));
+    });
   },
 
   /* This second method is specifically useful for this message.
@@ -130,18 +133,17 @@ var Message = Backbone.Model.extend({
   }
 });
 
-/* How would you call the second method?
- *
- * Try it yourself, then check out the answer at the bottom of this script.
- */
-
-
 // Let's try it out: 'instantiate' an instance of the class defined above:
 var myNewMessage = new Message();
 
 // ...and then make a change on that model to see it render
 myNewMessage.set({message: 'someMessage'});
 
+/* How would you call the second method?
+ *
+ * Try it yourself, then check out the answer at the bottom of this script.
+ */
+myNewMessage.alertThisMessage();
 
 /* Once the model is rendering on the `change` event, move on to step 3!
  *
@@ -159,6 +161,13 @@ myNewMessage.set({message: 'someMessage'});
  * deals with these 'templates'.  The templating, as well as other
  * useful methods, are wrapped up into Backbone.View.
  */
+
+
+
+
+
+
+
 
 /* - ANSWERS ------------------------------------------------------------------
  * To style your template, you could
